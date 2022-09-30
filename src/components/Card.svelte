@@ -2,6 +2,16 @@
   import type { LookupAPIResponse } from "src/typings/response";
 
   export let data: LookupAPIResponse | undefined;
+
+  const getAvatar = (avatar: string | null) => {
+    if (avatar == null) {
+      return `https://cdn.discordapp.com/embed/avatars/${
+        Number(data.discriminator) % 5
+      }.png`;
+    }
+
+    return `https://cdn.discordapp.com/avatars/${data.id}/${avatar}.png?size=1024`;
+  };
 </script>
 
 {#if data}
@@ -10,7 +20,7 @@
   >
     <img
       class="h-40 w-40 rounded-lg object-contain"
-      src={`https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=1024`}
+      src={getAvatar(data.avatar)}
       alt={data.username}
     />
 
